@@ -1,15 +1,35 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <h1>Genshin Characters</h1>
+  <div>
+    <CheckBoxList
+    v-for="s in selection"
+    :key = s.title
+    :title="s.title"
+    :list="s.list"
+    />
+  </div>
+  
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import CheckBoxList from './components/CheckBoxList.vue'
+import selection from '../public/selection.json'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    CheckBoxList
+  },
+  data: function () {
+    return {
+      selection: {},
+    }
+  },
+  created: function () {
+    this.selection = selection
+  },
+  methods: {
+
   }
 }
 </script>
