@@ -1,42 +1,72 @@
 <template>
-<div class="container">
-  <h1>Genshin Characters</h1>
-  <div class="row">
-    <CheckBoxList
-    v-for="s in selection"
-    :key = s.title
-    :title="s.title"
-    :list="s.list"
+  <div class="container">
+    <h1>Genshin Characters</h1>
+    <div class="row">
+      <CheckBoxList
+      v-for="s in selection"
+      :key = s.title
+      :title="s.title"
+      :list="s.list"
+      @changed="updateChecked"
+      />
+    </div>
+
+    <br>
+    <hr>
+    <br>
+
+    <Character
+    v-for="c in showList"
+    :key="c"
+    :info="c"
     />
+
   </div>
-</div>
-  
-  
 </template>
 
 <script>
 import CheckBoxList from './components/CheckBoxList.vue'
+import Character from './components/Character.vue'
 import selection from '../public/selection.json'
 import characters from '../public/characters.json'
 
 export default {
   name: 'App',
   components: {
-    CheckBoxList
+    CheckBoxList,
+    Character
   },
   data: function () {
     return {
       selection: {},
-      characters: {},
-      checked: {}
+      characters: [],
+      checked: {},
+      showList: []
     }
   },
   created: function () {
     this.selection = selection
     this.characters = characters
+    for (let s of this.selection) {
+      this.checked[s.title] = []
+    }
+    this.showList = characters
   },
   methods: {
-
+    updateChecked: function(data) {
+      this.checked[data.title] = data.list
+      this.updateCharacters()
+    },
+    updateCharacters: function() {
+      this.showList = this.characters
+      for (let s in this.checked) {
+        if (this.checked[s].length > 0) {
+          this.showList = this.showList.filter(
+            chara => this.checked[s].includes(chara[s]) 
+          )
+        }
+      }
+    }
   }
 }
 </script>

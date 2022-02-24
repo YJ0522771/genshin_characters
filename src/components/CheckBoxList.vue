@@ -8,7 +8,8 @@
         <input type="checkbox"
         :id="e"
         :value="e"
-        v-model="checked">
+        v-model="checked"
+        @change="changed">
         <label :for="e">{{ e }}</label>
       </div>
     </div>
@@ -27,6 +28,16 @@ export default {
       checked: []
     }
   },
+  methods: {
+    changed: function () {
+      let changedData = {
+        'title': this.title,
+        'list': this.checked
+      }
+      // console.log(this.checked)
+      this.$emit('changed', changedData)
+    }
+  }
 }
 </script>
 
