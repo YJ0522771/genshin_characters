@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h1>Genshin Characters</h1>
+    <h1>원신 캐릭터 분류기</h1>
     <div class="row">
       <CheckBoxList
       v-for="s in selection"
